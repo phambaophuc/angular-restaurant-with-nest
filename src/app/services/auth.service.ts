@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
 
-    private apiURL = `${environment.apiUrl}/api/v1`;
+    private apiURL = `${environment.apiUrl}/api/v1/auth`;
 
     constructor(private http: HttpClient) { }
 
@@ -17,7 +17,7 @@ export class AuthService {
     }
 
     login(username: string, password: string): Observable<any> {
-        const url = `${this.apiURL}/auth/login`;
+        const url = `${this.apiURL}/login`;
         return this.http.post<any>(url, { username, password });
     }
 
@@ -33,7 +33,7 @@ export class AuthService {
     }
 
     register(username: string, email: string, password: string): Observable<any> {
-        const url = `${this.apiURL}/user/signup`;
+        const url = `${this.apiURL}/signup`;
         return this.http.post<any>(url, { username, email, password });
     }
 }
