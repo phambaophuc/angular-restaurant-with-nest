@@ -19,8 +19,7 @@ export class LoginComponent {
         this.authService.login(this.username, this.password)
             .subscribe({
                 next: (response) => {
-                    localStorage.setItem('accessToken', response.accessToken);
-                    localStorage.setItem('refreshToken', response.refreshToken);
+                    localStorage.setItem('accessToken', response.access_token);
                     this.router.navigate(['/analytics']);
                 },
                 error: (error) => {

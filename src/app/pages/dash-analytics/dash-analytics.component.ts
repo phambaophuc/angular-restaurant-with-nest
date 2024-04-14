@@ -2,6 +2,7 @@ import { CommonModule, formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Review } from 'src/app/common/review';
+import { EmotionService } from 'src/app/services/emotion.service';
 import { ReviewService } from 'src/app/services/review.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 
@@ -16,9 +17,24 @@ export class DashAnalyticsComponent implements OnInit {
 
     reviews: Review[] = [];
 
-    constructor(private reviewService: ReviewService) { }
+    constructor(private reviewService: ReviewService, private emotionService: EmotionService) { }
 
     ngOnInit(): void {
+        this.getAllReviews();
+    }
+
+    getAllReviews(): void {
+        this.reviewService.getAllReviews()
+            .subscribe(reviews => {
+                this.reviews = reviews;
+                this.reviews.forEach(review => {
+                    this.emotionService.predictEmotion(review.comment)
+                        .subscribe((data: any) => {
+                            review.emotion = data.emotion;
+                        })
+                })
+            }
+            );
     }
 
     formatDateTime(dateTimeString: string): string {

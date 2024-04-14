@@ -17,7 +17,7 @@ export class AuthService {
     }
 
     login(username: string, password: string): Observable<any> {
-        const url = `${this.apiURL}/api/v1/auth/login`;
+        const url = `${this.apiURL}/auth/login`;
         return this.http.post<any>(url, { username, password });
     }
 
@@ -25,7 +25,6 @@ export class AuthService {
         return new Promise<void>((resolve, reject) => {
             try {
                 localStorage.removeItem('accessToken');
-                localStorage.removeItem('refreshToken');
                 resolve();
             } catch (error) {
                 reject(error);
@@ -34,7 +33,7 @@ export class AuthService {
     }
 
     register(username: string, email: string, password: string): Observable<any> {
-        const url = `${this.apiURL}/register`;
+        const url = `${this.apiURL}/user/signup`;
         return this.http.post<any>(url, { username, email, password });
     }
 }
